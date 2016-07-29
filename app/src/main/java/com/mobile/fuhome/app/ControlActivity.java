@@ -1,14 +1,10 @@
 package com.mobile.fuhome.app;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
@@ -21,28 +17,26 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.io.IOException;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.text.format.Time;
-import android.view.KeyEvent;
 
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Intent;
+
+import com.mobile.fuhome.app.utils.HttpUtils;
+
 import java.text.SimpleDateFormat;
 import  java.util.Date;
 public class ControlActivity extends Activity {
@@ -246,7 +240,7 @@ public class ControlActivity extends Activity {
                         params.put("id", id);
                         //服务器请求路径
                         String strUrlPath = "http://fuhome.net/api/sblist/";
-                        String strResult = HttpUtil.submitPostData(strUrlPath, params, "utf-8");
+                        String strResult = HttpUtils.submitPostData(strUrlPath, params, "utf-8");
 
                         Log.v("sbcontrol_http_post", strResult.replaceAll(" ", ""));
 
