@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
-        versionName "4.2.3"
+        versionName "4.2.2"
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/universal-image-loader-1.8.4-with-sources.jar')
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 }

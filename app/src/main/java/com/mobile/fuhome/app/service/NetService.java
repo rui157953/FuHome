@@ -45,7 +45,7 @@ public class NetService extends Service {
 
 
     public class  LocalBinder extends Binder{
-        NetService getService(){
+        public NetService getService(){
             return NetService.this;
         }
 

@@ -30,6 +30,8 @@
             android:label="@string/title_activity_control"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ControlDeviceActivity"/>
+        <activity
             android:name=".AboutActivity"
             android:label="@string/about"
             android:screenOrientation="portrait"/>
