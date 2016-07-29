@@ -1,0 +1,55 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobile.fuhome.app">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".ApplicationUtil"
+        android:allowBackup="true"
+        android:icon="@drawable/favicon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/m_title"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SblistActivity"
+            android:label="@string/title_activity_sblist"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ControlActivity"
+            android:label="@string/title_activity_control"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".EnlistActivity"
+            android:label="@string/enlist"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".EncontrolActivity"
+            android:label="@string/encontrol"
+            android:screenOrientation="portrait"/>
+
+        <service
+            android:name=".NetService"
+            android:enabled="true"
+            android:exported="true"/>
+    </application>
+
+
+
+
+</manifest>
+

@@ -1,0 +1,187 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.mobile.fuhome.app.EncontrolActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.7">
+        <TextView
+            android:text="局域网模式——先保存对应设备的内网IP"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:textSize="14sp"/>
+        <TextView
+            android:text="响应："
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Tv_txts"
+            android:layout_weight="0.2"/>
+        <TextView
+            android:text="---------"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Tv_txt"
+            android:textSize="14sp"
+            android:layout_weight="0.2"
+            android:maxLength="30" />
+
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:id="@+id/E_com"
+            android:textSize="14sp"
+            android:layout_weight="0.2"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.3">
+           <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="保存IP"
+            android:id="@+id/B_saveIP"
+            android:layout_weight="0.3"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="清 空"
+                android:id="@+id/B_clear"
+                android:layout_weight="0.3"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="发 送"
+                android:id="@+id/B_send"
+                android:layout_weight="0.2"/>
+            </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="打 开"
+            android:id="@+id/B_open"
+            android:layout_weight="0.5"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="关 闭"
+            android:id="@+id/B_close"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/b_comlist1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.9">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com1"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com2"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com3"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/b_comlist2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.9">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com4"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com5"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com6"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/b_comlist3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.9">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com7"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com8"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/B_com9"
+            android:visibility="invisible"
+            android:layout_weight="0.33"/>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

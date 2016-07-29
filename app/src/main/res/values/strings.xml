@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">未来之家</string>
+    <string name="m_title">未来之家</string>
+    <string name="hello_world">欢迎来到我的未来之家！嘿嘿</string>
+    <string name="about">关 于</string>
+    <string name="ennet">局域网控制模式</string>
+    <string name="title_activity_sblist">我家的设备</string>
+    <string name="title_activity_control">ControlActivity</string>
+    <string name="notitle">未设置</string>
+    <string name="url_server">http://fuhome.net/apk/version.xml</string>
+    <string name="action_settings">Settings</string>
+    <string name="enlist">局域网模式</string>
+    <string name="encontrol">局域网控制台</string>
+    <string name="click">点击</string>
+
+</resources>
