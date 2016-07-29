@@ -7,36 +7,30 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import android.widget.AdapterView;
-import android.widget.SimpleAdapter;
-import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
-
-import java.lang.String;
-
+import com.mobile.fuhome.app.service.NetService;
+import com.mobile.fuhome.app.utils.HttpUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.view.KeyEvent;
-
-import com.mobile.fuhome.app.utils.HttpUtils;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SblistActivity extends Activity {
 

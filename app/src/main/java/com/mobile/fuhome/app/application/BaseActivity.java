@@ -1,4 +1,4 @@
-package com.mobile.fuhome.app.launcher;
+package com.mobile.fuhome.app.application;
 
 import android.app.Activity;
 import android.os.Bundle;

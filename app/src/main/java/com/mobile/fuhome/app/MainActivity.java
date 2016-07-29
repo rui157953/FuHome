@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobile.fuhome.app.bean.UpdataInfo;
+import com.mobile.fuhome.app.service.NetService;
 import com.mobile.fuhome.app.utils.HttpUtils;
 
 import org.json.JSONObject;
@@ -136,17 +138,17 @@ public class MainActivity extends Activity {
                 if (C_rem.isChecked()) {
                     SharedPreferences userInfo;
                     userInfo = getSharedPreferences("login", 0);
-                    userInfo.edit().putString("name", str_name).commit();
-                    userInfo.edit().putString("psw", str_psw).commit();
-                    userInfo.edit().putString("psws", str_psw).commit();
-                    userInfo.edit().putString("rem", "yes").commit();
+                    userInfo.edit().putString("name", str_name).apply();
+                    userInfo.edit().putString("psw", str_psw).apply();
+                    userInfo.edit().putString("psws", str_psw).apply();
+                    userInfo.edit().putString("rem", "yes").apply();
                 } else {
                     SharedPreferences userInfo;
                     userInfo = getSharedPreferences("login", 0);
-                    userInfo.edit().putString("name", str_name).commit();
-                    userInfo.edit().putString("psw", "").commit();
-                    userInfo.edit().putString("psws", str_psw).commit();
-                    userInfo.edit().putString("rem", "").commit();
+                    userInfo.edit().putString("name", str_name).apply();
+                    userInfo.edit().putString("psw", "").apply();
+                    userInfo.edit().putString("psws", str_psw).apply();
+                    userInfo.edit().putString("rem", "").apply();
 
                 }
 
@@ -226,7 +228,7 @@ public class MainActivity extends Activity {
 
                                         SharedPreferences userInfo;
                                         userInfo = getSharedPreferences("login", 0);
-                                        userInfo.edit().putString("userid", userid).commit();
+                                        userInfo.edit().putString("userid", userid).apply();
 
                                         //设置
                                         ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
