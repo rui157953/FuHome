@@ -303,7 +303,7 @@ public class SblistActivity extends Activity {
                                                   userInfo.edit().putString("sb_id", sb_id[arg2]).commit();
                                                   userInfo.edit().putString("id",  id[arg2]).commit();*/
                 /* 指定intent要启动的类 */
-                                          intent.setClass(SblistActivity.this, ControlActivity.class);
+                                          intent.setClass(SblistActivity.this, ControlDeviceActivity.class);
                 /* 启动一个新的Activity */
                                           SblistActivity.this.startActivity(intent);
 

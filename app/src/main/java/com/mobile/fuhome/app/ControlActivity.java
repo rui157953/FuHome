@@ -393,7 +393,6 @@ public class ControlActivity extends Activity {
 
 
         //send按钮
-
         B_send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
