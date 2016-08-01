@@ -1,54 +1,36 @@
 package com.mobile.fuhome.app;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
-
-import java.lang.String;
-
+import com.mobile.fuhome.app.service.NetService;
+import com.mobile.fuhome.app.utils.HttpUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.view.KeyEvent;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SblistActivity extends Activity {
 
@@ -136,7 +118,7 @@ public class SblistActivity extends Activity {
                             params.put("f", "5");
                             //服务器请求路径
                             String strUrlPath = "http://fuhome.net/api/sblist/";
-                            String strResult = HttpUtil.submitPostData(strUrlPath, params, "utf-8");
+                            String strResult = HttpUtils.submitPostData(strUrlPath, params, "utf-8");
 
                             Log.v("sblist_http_post", strResult.replaceAll(" ", ""));
 

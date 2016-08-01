@@ -30,6 +30,8 @@
             android:label="@string/title_activity_control"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ControlDeviceActivity"/>
+        <activity
             android:name=".AboutActivity"
             android:label="@string/about"
             android:screenOrientation="portrait"/>
@@ -43,7 +45,7 @@
             android:screenOrientation="portrait"/>
 
         <service
-            android:name=".NetService"
+            android:name=".service.NetService"
             android:enabled="true"
             android:exported="true"/>
     </application>

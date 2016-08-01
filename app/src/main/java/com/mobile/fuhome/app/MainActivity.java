@@ -2,7 +2,7 @@ package com.mobile.fuhome.app;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -20,53 +20,38 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
+
+import com.mobile.fuhome.app.bean.UpdataInfo;
+import com.mobile.fuhome.app.service.NetService;
+import com.mobile.fuhome.app.utils.HttpUtils;
+
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import android.content.Intent;
-
 import java.net.URL;
 import java.security.MessageDigest;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.OutputStream;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.io.ByteArrayOutputStream;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends Activity {
 
 
-    private EditText E_name,E_psw;
+    private EditText E_name, E_psw;
     private Button B_login;
     private CheckBox C_rem;
-    String str_name ; //这是要传输的数据
-    String str_openid="83762687e6694006f6d1161864164d0f"; //这是要传输的数据
-    String str_psw ; //这是要传输的数据
+    String str_name; //这是要传输的数据
+    String str_openid = "83762687e6694006f6d1161864164d0f"; //这是要传输的数据
+    String str_psw; //这是要传输的数据
 
     DatagramSocket socket;
-    char lo_flag= 0;//0，1失败，2登录
-    char flag=0;//建立socket
+    char lo_flag = 0;//0，1失败，2登录
+    char flag = 0;//建立socket
 
-    char appflag=0;//0需要重新初始化
+    char appflag = 0;//0需要重新初始化
 
     private TextView Tv_banben;
     byte[] getBuf = new byte[1024];//接收缓冲
@@ -87,29 +72,26 @@ public class MainActivity extends Activity {
         Tv_banben = (TextView) findViewById(R.id.Tv_banben);
         E_name = (EditText) findViewById(R.id.E_name);
         E_psw = (EditText) findViewById(R.id.E_psw);
-        C_rem=(CheckBox) findViewById(R.id.C_rem);
+        C_rem = (CheckBox) findViewById(R.id.C_rem);
         B_login = (Button) findViewById(R.id.B_login);
 
         //读取保存的账号，密码，记住密码否
         SharedPreferences userInfo;
         userInfo = getSharedPreferences("login", 0);
-        String str =userInfo.getString("name","");
+        String str = userInfo.getString("name", "");
         E_name.setText(str);
-         str=userInfo.getString("psw","");
+        str = userInfo.getString("psw", "");
         E_psw.setText(str);
         str_psw = str;
 
 
         //记住密码
-        str=userInfo.getString("rem","");
+        str = userInfo.getString("rem", "");
 
-        if(str.equals("yes"))
-        {
+        if (str.equals("yes")) {
             C_rem.setChecked(true);
 
-        }
-        else
-        {
+        } else {
             C_rem.setChecked(false);
 
         }
@@ -117,10 +99,10 @@ public class MainActivity extends Activity {
 
         //app socket
 
-       ApplicationUtil appUtil =  (ApplicationUtil) MainActivity.this.getApplication();
-       try {
-          appUtil.init();
-          socket = appUtil.Out_socket();
+        ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+        try {
+            appUtil.init();
+            socket = appUtil.Out_socket();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -138,7 +120,7 @@ public class MainActivity extends Activity {
 
         //Log.e("","绑定服务");
         //绑定服务
-       // Intent serviceIntent =new Intent(MainActivity.this,NetService.class);
+        // Intent serviceIntent =new Intent(MainActivity.this,NetService.class);
         //bindService(serviceIntent,mConnection,Context.BIND_AUTO_CREATE);
 
         //登录
@@ -150,47 +132,37 @@ public class MainActivity extends Activity {
                 //记录下账号和密码
                 str_name = E_name.getText().toString(); //这是要传输的数据
                 String str_psws = E_psw.getText().toString();
-               if(str_psws.length()!=32)
-                str_psw=MD5(E_psw.getText().toString());
+                if (str_psws.length() != 32)
+                    str_psw = MD5(E_psw.getText().toString());
 
-               if(C_rem.isChecked()) {
-                   SharedPreferences userInfo;
-                   userInfo = getSharedPreferences("login", 0);
-                   userInfo.edit().putString("name", str_name).commit();
-                   userInfo.edit().putString("psw", str_psw).commit();
-                   userInfo.edit().putString("psws", str_psw).commit();
-                   userInfo.edit().putString("rem", "yes").commit();
-               }
-                else
-               {
-                   SharedPreferences userInfo;
-                   userInfo = getSharedPreferences("login", 0);
-                   userInfo.edit().putString("name", str_name).commit();
-                   userInfo.edit().putString("psw","").commit();
-                   userInfo.edit().putString("psws", str_psw).commit();
-                   userInfo.edit().putString("rem", "").commit();
+                if (C_rem.isChecked()) {
+                    SharedPreferences userInfo;
+                    userInfo = getSharedPreferences("login", 0);
+                    userInfo.edit().putString("name", str_name).apply();
+                    userInfo.edit().putString("psw", str_psw).apply();
+                    userInfo.edit().putString("psws", str_psw).apply();
+                    userInfo.edit().putString("rem", "yes").apply();
+                } else {
+                    SharedPreferences userInfo;
+                    userInfo = getSharedPreferences("login", 0);
+                    userInfo.edit().putString("name", str_name).apply();
+                    userInfo.edit().putString("psw", "").apply();
+                    userInfo.edit().putString("psws", str_psw).apply();
+                    userInfo.edit().putString("rem", "").apply();
 
-               }
-
-                //app
-
-
-
-
-
-                if(str_name.equals("")|str_psw.equals(""))
-                {
-                    Log.v("name_psw", "空");
                 }
-                else
-                {
+
+
+                if (str_name.equals("") | str_psw.equals("")) {
+                    Log.v("name_psw", "空");
+                } else {
                     Log.v("进入http", "准备");
                     //登录
 
-                               // socket=binderService.Out_socket();
-                               // Log.e("","socket");
-                                //binderService.Set_name( str_name, str_psw);
-                                //Log.e("","mm");
+                    // socket=binderService.Out_socket();
+                    // Log.e("","socket");
+                    //binderService.Set_name( str_name, str_psw);
+                    //Log.e("","mm");
 
                               /*  InetAddress serverAddress = InetAddress.getByName("115.28.93.201");
                                 // InetAddress serverAddress = InetAddress.getByName("192.168.1.104");
@@ -211,122 +183,116 @@ public class MainActivity extends Activity {
 
 
                           /* 任务 */
-                        lo_flag=0;
-                         new Thread() {
-                             @Override
-                             public void run() {
-                                 // TODO Auto-generated method stub
+                    lo_flag = 0;
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            // TODO Auto-generated method stub
 
-                                 try {
-
-
-                                     if(lo_flag==0) {
-                                         Log.v("进入http", "try");
-
-                                         //建立一个NameValuePair数组，用于存储欲传递的参数
-                                         Map<String, String> params = new HashMap<String, String>();
-                                         params.put("openid", str_openid);
-                                         params.put("username",  str_name);
-                                         params.put("psw", str_psw);
-                                         params.put("f", "2");
-                                         //服务器请求路径
-                                         String strUrlPath = "http://fuhome.net/api/sblist/";
-                                         String strResult = HttpUtil.submitPostData(strUrlPath, params, "utf-8");
+                            try {
 
 
-                                         Log.v("http_post", strResult.replaceAll(" ", ""));
+                                if (lo_flag == 0) {
+                                    Log.v("进入http", "try");
+
+                                    //建立一个NameValuePair数组，用于存储欲传递的参数
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("openid", str_openid);
+                                    params.put("username", str_name);
+                                    params.put("psw", str_psw);
+                                    params.put("f", "2");
+                                    //服务器请求路径
+                                    String strUrlPath = "http://fuhome.net/api/sblist/";
+                                    String strResult = HttpUtils.submitPostData(strUrlPath, params, "utf-8");
 
 
-                                         //String rev = EntityUtils.toString(response.getEntity());//返回json格式： {"id": "27JpL~j4vsL0LX00E00005","version": "abc"}
-                                         JSONObject obj = new JSONObject(strResult);
-                                         String dis = obj.getString("dis");
-                                         String log = obj.getString("log");
-                                         //String userid = obj.getString("userid");
-
-                                         Log.v("dis", dis);
-                                         Log.v("log", log);
+                                    Log.v("http_post", strResult.replaceAll(" ", ""));
 
 
-                                         if (log.equals("ok")) {
+                                    //String rev = EntityUtils.toString(response.getEntity());//返回json格式： {"id": "27JpL~j4vsL0LX00E00005","version": "abc"}
+                                    JSONObject obj = new JSONObject(strResult);
+                                    String dis = obj.getString("dis");
+                                    String log = obj.getString("log");
+                                    //String userid = obj.getString("userid");
 
-                                             lo_flag = 1;
-                                             String userid = obj.getString("userid");
-                                             Log.v("userid", userid);
-
-
-                                             SharedPreferences userInfo;
-                                             userInfo = getSharedPreferences("login", 0);
-                                             userInfo.edit().putString("userid", userid).commit();
-
-                                             //设置
-                                             ApplicationUtil appUtil =  (ApplicationUtil) MainActivity.this.getApplication();
-                                             try {
-                                                 //设置userid
-                                                 appUtil.Set_userid(str_openid,userid,str_psw);
-
-                                             } catch (Exception e1) {
-                                                 e1.printStackTrace();
-                                             }
+                                    Log.v("dis", dis);
+                                    Log.v("log", log);
 
 
+                                    if (log.equals("ok")) {
+
+                                        lo_flag = 1;
+                                        String userid = obj.getString("userid");
+                                        Log.v("userid", userid);
 
 
+                                        SharedPreferences userInfo;
+                                        userInfo = getSharedPreferences("login", 0);
+                                        userInfo.edit().putString("userid", userid).apply();
 
-                                          Message msg1 = Message.obtain();
-                                            msg1.obj = "登录成功";
-                                            msg1.what = 1;
-                                            mHandler_re.sendMessage(msg1);
+                                        //设置
+                                        ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+                                        try {
+                                            //设置userid
+                                            appUtil.Set_userid(str_openid, userid, str_psw);
 
-                                             //建立service
+                                        } catch (Exception e1) {
+                                            e1.printStackTrace();
+                                        }
 
-                                             Intent startIntent = new Intent(MainActivity.this, NetService.class);
-                                             startService(startIntent);
+
+                                        Message msg1 = Message.obtain();
+                                        msg1.obj = "登录成功";
+                                        msg1.what = 1;
+                                        mHandler_re.sendMessage(msg1);
+
+                                        //建立service
+
+                                        Intent startIntent = new Intent(MainActivity.this, NetService.class);
+                                        startService(startIntent);
 
 
                                             /* 新建一个Intent对象 */
-                                             Intent intent = new Intent();
-                                             //intent.putExtra("r_name",str_name);
-                                             //intent.putExtra("r_psw",str_psw);
+                                        Intent intent = new Intent();
+                                        //intent.putExtra("r_name",str_name);
+                                        //intent.putExtra("r_psw",str_psw);
                                             /* 指定intent要启动的类 */
-                                             intent.setClass(MainActivity.this, SblistActivity.class);
+                                        intent.setClass(MainActivity.this, SblistActivity.class);
                                              /* 启动一个新的Activity */
-                                             MainActivity.this.startActivity(intent);
+                                        MainActivity.this.startActivity(intent);
                                              /* 关闭当前的Activity */
-                                             MainActivity.this.finish();
+                                        MainActivity.this.finish();
 
-                                             Log.v("login", "right");
-                                         } else {
+                                        Log.v("login", "right");
+                                    } else {
 
-                                             lo_flag = 1;
+                                        lo_flag = 1;
 
-                                             Log.v("login", "wrong");
+                                        Log.v("login", "wrong");
 
-                                             Message msg2 = Message.obtain();
-                                             String res = "账号或者密码错误";
-                                             msg2.obj = res;
-                                             msg2.what = 1;
-                                             mHandler_re.sendMessage(msg2);
-                                             //Toast.makeText(MainActivity.this, "w", Toast.LENGTH_SHORT).show();
+                                        Message msg2 = Message.obtain();
+                                        String res = "账号或者密码错误";
+                                        msg2.obj = res;
+                                        msg2.what = 1;
+                                        mHandler_re.sendMessage(msg2);
+                                        //Toast.makeText(MainActivity.this, "w", Toast.LENGTH_SHORT).show();
 
-                                         }
+                                    }
 
-                                        // Thread.sleep(3000);// 线程暂停30秒，单位毫秒
-                                     }//while
+                                    // Thread.sleep(3000);// 线程暂停30秒，单位毫秒
+                                }//while
 
-                                 } catch (Exception e) {
-                                     // TODO Auto-generated catch block
-                                     e.printStackTrace();
-                                 }
-                             }
-                         }.start();
-
-                }
-
-
+                            } catch (Exception e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
 
                 }
 
 
+            }
 
 
         });//登录按钮
@@ -335,19 +301,18 @@ public class MainActivity extends Activity {
         //while(binderService==null);
 
 
-
     }//onCreate
 
-    private ServiceConnection mConnection=new ServiceConnection() {
+    private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            binderService=((NetService.LocalBinder)service).getService();
+            binderService = ((NetService.LocalBinder) service).getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
 
-            binderService=null;
+            binderService = null;
         }
     };
 
@@ -359,9 +324,11 @@ public class MainActivity extends Activity {
                 0);
         return packInfo.versionName;
     }
+
     //检查是否有新版本
     public class CheckVersionTask implements Runnable {
         InputStream is;
+
         public void run() {
             try {
                 String path = getResources().getString(R.string.url_server);
@@ -378,7 +345,7 @@ public class MainActivity extends Activity {
                 info = UpdataInfoParser.getUpdataInfo(is);
 
 
-                Log.i(TAG,"版本更新 ="+info.getVersion()+"-- 服务器版本"+localVersion);
+                Log.i(TAG, "版本更新 =" + info.getVersion() + "-- 服务器版本" + localVersion);
                 if (info.getVersion().equals(localVersion)) {
                     Log.i(TAG, "版本号相同");
 
@@ -404,7 +371,7 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1://显示传输的内容
-                    String str=(String)msg.obj;
+                    String str = (String) msg.obj;
                     //tv_review.setText(str);
                     Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
 
@@ -413,13 +380,13 @@ public class MainActivity extends Activity {
                     break;
 
                 case 2:
-                    String str1=(String)msg.obj;
+                    String str1 = (String) msg.obj;
 
                     Log.v(str1, "handler_login_case2");
                     break;
 
                 case 3:
-                    String str2=(String)msg.obj;
+                    String str2 = (String) msg.obj;
                     Toast.makeText(MainActivity.this, str2, Toast.LENGTH_LONG).show();
                     Log.v(str2, "handler_login_case3");
                     Tv_banben.setText(str2);
@@ -436,9 +403,9 @@ public class MainActivity extends Activity {
 
         //app
 
-        ApplicationUtil appUtil =  (ApplicationUtil) MainActivity.this.getApplication();
+        ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
         try {
-           // appUtil.Close_socket();
+            // appUtil.Close_socket();
             MainActivity.this.finish();
 
         } catch (Exception e1) {
@@ -476,9 +443,7 @@ public class MainActivity extends Activity {
     }
 
 
-
-
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -496,7 +461,7 @@ public class MainActivity extends Activity {
            /* 新建一个Intent对象 */
             Intent intent0 = new Intent(this, AboutActivity.class);
             startActivity(intent0);
-           // return true;
+            // return true;
         }
 
         if (id == R.id.enlist) {

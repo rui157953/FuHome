@@ -1,4 +1,4 @@
-package com.mobile.fuhome.app;
+package com.mobile.fuhome.app.bean;
 
 /**
  * Created by Administrator on 2014/9/27.

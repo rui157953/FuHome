@@ -1,30 +1,28 @@
-package com.mobile.fuhome.app;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.BufferedInputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.OutputStream;
-import java.io.InputStream;
-import java.io.StringBufferInputStream;
-import java.util.Map;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.*;
+package com.mobile.fuhome.app.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import java.net.MalformedURLException;
 
-public class HttpUtil {
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Map;
+
+import okhttp3.Call;
+
+public class HttpUtils {
     /*
      * Function  :   发送Post请求到服务器
      * Param     :   params请求体内容，encode编码格式
      */
-    public static String submitPostData(String strUrlPath,Map<String, String> params, String encode) {
+    public static String submitPostData(String strUrlPath, Map<String, String> params, String encode) {
 
         byte[] data = getRequestData(params, encode).toString().getBytes();//获得请求体
         try {
@@ -32,7 +30,7 @@ public class HttpUtil {
             //String urlPath = "http://192.168.1.9:80/JJKSms/RecSms.php";
             URL url = new URL(strUrlPath);
 
-            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);     //设置连接超时时间
             httpURLConnection.setDoInput(true);                  //打开输入流，以便从服务器获取数据
             httpURLConnection.setDoOutput(true);                 //打开输出流，以便向服务器提交数据
@@ -47,7 +45,7 @@ public class HttpUtil {
             outputStream.write(data);
 
             int response = httpURLConnection.getResponseCode();            //获得服务器的响应码
-            if(response == HttpURLConnection.HTTP_OK) {
+            if (response == HttpURLConnection.HTTP_OK) {
                 InputStream inptStream = new BufferedInputStream(httpURLConnection.getInputStream());
                 return dealResponseResult(inptStream);                     //处理服务器的响应结果
             }
@@ -65,7 +63,7 @@ public class HttpUtil {
     public static StringBuffer getRequestData(Map<String, String> params, String encode) {
         StringBuffer stringBuffer = new StringBuffer();        //存储封装好的请求体信息
         try {
-            for(Map.Entry<String, String> entry : params.entrySet()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
                 stringBuffer.append(entry.getKey())
                         .append("=")
                         .append(URLEncoder.encode(entry.getValue(), encode))
@@ -85,7 +83,7 @@ public class HttpUtil {
     public static String dealResponseResult(InputStream inputStream) {
         String resultData = null;      //存储处理结果
         StringBuffer sb = new StringBuffer();
-        BufferedReader br=null;
+        BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(inputStream));
             String inputLine = "";
@@ -93,17 +91,14 @@ public class HttpUtil {
                 sb.append(inputLine);
             }
             resultData = sb.toString();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //Log.i(TAG, "Error reading InputStream");
             resultData = null;
-        }
-        finally {
+        } finally {
             if (br != null) {
                 try {
                     br.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     //Log.i(TAG, "Error closing InputStream");
                 }
             }
@@ -127,7 +122,7 @@ public class HttpUtil {
     }
 
 
-    public Bitmap getBitmap(String imageUrl){
+    public Bitmap getBitmap(String imageUrl) {
         Bitmap mBitmap = null;
         try {
             URL url = new URL(imageUrl);
@@ -144,6 +139,23 @@ public class HttpUtil {
         return mBitmap;
     }
 
+    /**
+     * 网络请求
+     */
+
+    public static void requestGet(String url, ResultCallback callbck){
+        OkHttpManager.getInstance().okhttpGet(url,callbck);
+
+    }
+
+    public static void requestPost(String url, Map<String,String> requestBody,ResultCallback callbck) {
+        OkHttpManager.getInstance().okhttpPost(url,requestBody,callbck);
+    }
+
+    interface ResultCallback{
+        void onFailure(Call call, IOException e);
+        void onResponse(Call call, String response);
+    }
 
 
 }

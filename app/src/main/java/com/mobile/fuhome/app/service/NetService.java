@@ -1,12 +1,13 @@
-package com.mobile.fuhome.app;
+package com.mobile.fuhome.app.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.EditText;
+
+import com.mobile.fuhome.app.ApplicationUtil;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -44,7 +45,7 @@ public class NetService extends Service {
 
 
     public class  LocalBinder extends Binder{
-        NetService getService(){
+        public NetService getService(){
             return NetService.this;
         }
 

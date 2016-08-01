@@ -3,9 +3,14 @@ package com.mobile.fuhome.app;
 /**
  * Created by Administrator on 2014/9/27.
  */
-import java.io.InputStream;
-import org.xmlpull.v1.XmlPullParser;
 import android.util.Xml;
+
+import com.mobile.fuhome.app.bean.UpdataInfo;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.InputStream;
+
 public class UpdataInfoParser {
     public static UpdataInfo getUpdataInfo(InputStream is) throws Exception{
         XmlPullParser  parser = Xml.newPullParser();
