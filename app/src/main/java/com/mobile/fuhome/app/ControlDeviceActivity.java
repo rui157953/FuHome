@@ -107,7 +107,9 @@ public class ControlDeviceActivity extends BaseActivity {
                     Log.v("ok", "control_case6");
                     break;
                 case 7:
+                    Log.i("ryan","case");
                     if (adapter != null) {
+                        Log.i("ryan","case1");
                         adapter.notifyDataSetChanged();
                     }
 //
@@ -280,10 +282,10 @@ public class ControlDeviceActivity extends BaseActivity {
         stateList = new ArrayList<>();
         mAdapter = new MyAdapter(stateList);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setOnClickListener(new View.OnClickListener() {
+        mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.i("ryan","dianji");
+            public void onClick(int position) {
+                Log.i("ryan","dianji" +position);
             }
         });
 
@@ -299,6 +301,7 @@ public class ControlDeviceActivity extends BaseActivity {
                 viewHolder.setText(R.id.num_tv, item.get("feelvalue"));
                 viewHolder.setText(R.id.cell_tv, item.get("feelunit"));
                 viewHolder.setText(R.id.time_tv, item.get("feeltime"));
+                Log.i("ryan","UniversalBaseAdapter");
             }
         };
     }
