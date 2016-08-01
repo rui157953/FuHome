@@ -62,6 +62,7 @@ public abstract class UniversalBaseAdapter<T> extends BaseAdapter {
 		convert(viewHolder, getItem(position));
 		if (isSelectable) {
 			choosed(viewHolder, position);
+
 		}
 		return viewHolder.getConvertView();
 	}
@@ -69,7 +70,7 @@ public abstract class UniversalBaseAdapter<T> extends BaseAdapter {
 	protected abstract void convert(ViewHolder viewHolder, T item);
 
 	protected void choosed(ViewHolder viewHolder, int position) {
-		if (isChoice[position] == true) {
+		if (isChoice[position]) {
 			selectedState(viewHolder);
 		} else {
 			normalState(viewHolder);
@@ -87,7 +88,7 @@ public abstract class UniversalBaseAdapter<T> extends BaseAdapter {
 	public void choiceState(int position) {
 		// isChoice[position] = isChoice[position] == true ? false : true;
 
-		if (isChoice[position] == true) {
+		if (isChoice[position]) {
 			isChoice[position] = false;
 			count--;
 		} else {
@@ -102,7 +103,7 @@ public abstract class UniversalBaseAdapter<T> extends BaseAdapter {
 		ArrayList<Integer> positions = new ArrayList<>();
 
 		for (int i = 0; i < isChoice.length; i++) {
-			if (isChoice[i] == true) {
+			if (isChoice[i]) {
 				positions.add(i);
 			}
 		}

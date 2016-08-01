@@ -277,7 +277,7 @@ public class ControlDeviceActivity extends BaseActivity {
         mLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(mLayoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         //创建并设置Adapter
         stateList = new ArrayList<>();
         mAdapter = new MyAdapter(stateList);
@@ -285,7 +285,8 @@ public class ControlDeviceActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Log.i("ryan","dianji" +position);
+//                Log.i("ryan","dianji" +position);
+                sendout(position);
             }
         });
 
@@ -304,6 +305,79 @@ public class ControlDeviceActivity extends BaseActivity {
                 Log.i("ryan","UniversalBaseAdapter");
             }
         };
+        lv.setAdapter(adapter);
+    }
+
+
+    private void sendout(final int position) {
+
+
+        //控制1
+               /* */
+        new Thread() {
+
+            public void run() {
+                try {
+
+                    serverAddress = InetAddress.getByName(str_ip);
+                    port = Integer.parseInt(str_port);
+
+                    //组合协议2
+                    byte[] data = new byte[120]; //把传输内容分解成字节
+                    data[2] = 2;
+                    data[3] = 'B';
+                    data[4] = 6;
+
+                    //userid
+                    int temp = Integer.parseInt(str_userid);
+                    for (int i = 0; i < 4; i++) {
+                        data[5 + i] = (byte) (temp >> (24 - i * 8));
+                    }
+                    //密码
+                    byte[] data_temp = str_psw.getBytes();
+                    for (int i = 0; i < 32; i++) {
+                        data[9 + i] = data_temp[i];
+                    }
+                    //openid
+                    data_temp = str_openid.getBytes();
+                    for (int i = 0; i < 32; i++) {
+                        data[41 + i] = data_temp[i];
+                    }
+                    //sbid
+                    temp = Integer.parseInt(sb_id);
+                    for (int i = 0; i < 4; i++) {
+                        data[73 + i] = (byte) (temp >> (24 - i * 8));
+                    }
+                    String str_com = stateList.get(position).get("comstring");
+
+                    int str_com_length = str_com.length();
+                    Log.v("control", str_com + "..." + str_com_length);
+                    data_temp = str_com.getBytes("UTF-8");
+
+                    for (int i = 0; i < str_com_length; i++) {
+                        data[77 + i] = data_temp[i];
+                    }
+                    data[77 + str_com_length] = 5;
+                    data[0] = 0;
+                    data[1] = (byte) (0x4e + str_com_length);
+
+                    //创建一个DatagramPacket对象，并指定要讲这个数据包发送到网络当中的哪个、地址，以及端口号
+                    DatagramPacket packet = new DatagramPacket(data, data[1], serverAddress, port);
+                    //调用socket对象的send方法，发送数据
+
+                    socket.send(packet);
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        Message msg1 = Message.obtain();
+        msg1.obj = stateList.get(position).get("comstring");
+        msg1.what = 4;
+        mHandler_re.sendMessage(msg1);
     }
 
     private void setButtonListerner() {
