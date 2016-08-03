@@ -69,6 +69,8 @@ public class SblistActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sblist);
+        Intent startIntent = new Intent(this, NetService.class);
+        startService(startIntent);
 
         /*首先刷新设备列表  */
         Log.e("sblist", "start onCreate~~~");
@@ -116,6 +118,7 @@ public class SblistActivity extends Activity {
                             params.put("userid", str_userid);
                             params.put("psw", str_psw);
                             params.put("f", "5");
+                            HttpUtils.addCommValue(SblistActivity.this,params);
                             //服务器请求路径
                             String strUrlPath = "http://fuhome.net/api/sblist/";
                             String strResult = HttpUtils.submitPostData(strUrlPath, params, "utf-8");
@@ -304,6 +307,7 @@ public class SblistActivity extends Activity {
                                                   userInfo.edit().putString("id",  id[arg2]).commit();*/
                 /* 指定intent要启动的类 */
                                           intent.setClass(SblistActivity.this, ControlDeviceActivity.class);
+//                                          intent.setClass(SblistActivity.this, ControlActivity.class);
                 /* 启动一个新的Activity */
                                           SblistActivity.this.startActivity(intent);
 

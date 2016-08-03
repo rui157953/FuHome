@@ -93,6 +93,9 @@ public class ControlDeviceActivity extends BaseActivity {
                     if (mAdapter != null) {
                         mAdapter.notifyDataSetChanged();
                     }
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
                     break;
                 case 4:
                     String str4 = (String) msg.obj;
@@ -222,7 +225,7 @@ public class ControlDeviceActivity extends BaseActivity {
 
                 public void run() {
                     try {
-                        Thread.sleep(100);// 线程暂停1秒，单位毫秒
+                        Thread.sleep(1000);// 线程暂停1秒，单位毫秒
                         Log.v("ok", "加载存储的传感器参数进行显示");
                         Message msg1 = Message.obtain();
                         msg1.obj = "value";
@@ -586,6 +589,7 @@ public class ControlDeviceActivity extends BaseActivity {
                         params.put("psw", str_psw);
                         params.put("f", "6");
                         params.put("id", id);
+                        HttpUtils.addCommValue(ControlDeviceActivity.this,params);
                         //服务器请求路径
                         String strUrlPath = "http://fuhome.net/api/sblist/";
                         String strResult = HttpUtils.submitPostData(strUrlPath, params, "utf-8");
@@ -693,6 +697,7 @@ public class ControlDeviceActivity extends BaseActivity {
                                 String str_aa = new String(aa, "UTF-8");
 
                                 for (int i = 0; i < feelDataList.size(); i++) {
+                                    Log.i("ryan", "run: ----"+str_num+" -- "+feelDataList.get(i).get("feelnum"));
                                     if (str_num.equals(feelDataList.get(i).get("feelnum"))) {
                                         feelDataList.get(i).put("feelvalue", str_aa);
 
@@ -700,6 +705,8 @@ public class ControlDeviceActivity extends BaseActivity {
                                         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
                                         String times = formatter.format(curDate);
                                         feelDataList.get(i).put("feeltime", times);
+                                        Log.i("ryan", "run1: ----"+str_aa+" -- "+times);
+                                        Log.i("ryan", "map i: ----"+feelDataList.get(i).toString());
                                         Message msg1 = Message.obtain();
                                         msg1.obj = str_num;
                                         msg1.what = 7;
@@ -749,6 +756,8 @@ public class ControlDeviceActivity extends BaseActivity {
             map.put("feelnum", sbfeelBean.getFeelnum());
             map.put("feelstyle", sbfeelBean.getFeelstyle());
             map.put("feelunit", sbfeelBean.getFeelunit());
+            map.put("feelvalue","");
+            map.put("feeltime","");
             feelDataList.add(map);
         }
         for (FeelBean.SbcomBean sbcomBean : sbcom) {

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.mobile.fuhome.app.bean.UpdataInfo;
 import com.mobile.fuhome.app.service.NetService;
 import com.mobile.fuhome.app.utils.HttpUtils;
+import com.mobile.fuhome.app.utils.SharedPreferenceUtils;
 
 import org.json.JSONObject;
 
@@ -225,7 +226,8 @@ public class MainActivity extends Activity {
                                         String userid = obj.getString("userid");
                                         Log.v("userid", userid);
 
-
+                                        SharedPreferenceUtils.setBooleanData(MainActivity.this,"isLogined",true);
+                                        SharedPreferenceUtils.setStringData(MainActivity.this,"userid",userid);
                                         SharedPreferences userInfo;
                                         userInfo = getSharedPreferences("login", 0);
                                         userInfo.edit().putString("userid", userid).apply();
