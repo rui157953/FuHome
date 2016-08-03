@@ -1,7 +1,10 @@
 package com.mobile.fuhome.app.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.mobile.fuhome.app.application.Constants;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -152,9 +155,16 @@ public class HttpUtils {
         OkHttpManager.getInstance().okhttpPost(url,requestBody,callbck);
     }
 
-    interface ResultCallback{
-        void onFailure(Call call, IOException e);
+    public static void addCommValue(Context context,Map<String, String>params){
+        params.put("openid", Constants.STR_OPENID);
+        params.put("userid",SharedPreferenceUtils.getString(context,"userid",""));
+        params.put("username", SharedPreferenceUtils.getString(context,"username",""));
+        params.put("psw",  SharedPreferenceUtils.getString(context,"psw",""));
+    }
+
+    public interface ResultCallback{
         void onResponse(Call call, String response);
+        void onFailure(Call call, IOException e);
     }
 
 
