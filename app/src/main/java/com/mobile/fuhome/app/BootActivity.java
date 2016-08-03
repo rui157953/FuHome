@@ -40,7 +40,7 @@ public class BootActivity extends BaseActivity implements Animation.AnimationLis
                 }else {
                     jumpToActivity(LoginActivity.class);
                 }
-
+//                jumpToActivity(MainActivity.class);
                 BootActivity.this.finish();
             }
         }

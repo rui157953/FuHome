@@ -76,8 +76,8 @@ public class LoginActivity extends BaseActivity {
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                jumpToActivity(null);
-                Toast.makeText(LoginActivity.this, "暂时未开放改功能", Toast.LENGTH_SHORT).show();
+                jumpToActivity(RegistererActivity.class);
+//                Toast.makeText(LoginActivity.this, "暂时未开放改功能", Toast.LENGTH_SHORT).show();
             }
         });
     }
