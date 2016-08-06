@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 /**
  * Created by Ryan on 2016/4/13.
  */
@@ -81,6 +83,13 @@ public class ViewHolder {
 		ImageView imageView = getView(viewId);
 		// TODO: 2016/4/13 get pic from networld
 
+		return this;
+	}
+
+	public ViewHolder setImageByUrl(int viewId, String url)
+	{
+		ImageLoader.getInstance(3, Type.LIFO).loadImage(url,
+				(ImageView) getView(viewId));
 		return this;
 	}
 

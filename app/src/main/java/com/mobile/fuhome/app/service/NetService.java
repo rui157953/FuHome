@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.mobile.fuhome.app.ApplicationUtil;
+import com.mobile.fuhome.app.application.Constants;
+import com.mobile.fuhome.app.utils.SharedPreferenceUtils;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -62,11 +64,18 @@ public class NetService extends Service {
         try {
             appUtil.init();
             socket = appUtil.Out_socket();
-            str_openid =appUtil.Out_openid();
+           /* str_openid =appUtil.Out_openid();
             str_userid =appUtil.Out_userid();
             str_psw=appUtil.Out_psw();
             str_ip=appUtil.Out_ip();
-            str_port=appUtil.Out_port();
+            str_port=appUtil.Out_port(); */
+            str_openid = Constants.STR_OPENID;
+            str_userid = SharedPreferenceUtils.getString(this,"userid","");
+            str_psw=SharedPreferenceUtils.getString(this,"psw","");
+            str_ip=Constants.STR_IP;
+            str_port=Constants.STR_PORT;
+
+
 
         } catch (Exception e1) {
             e1.printStackTrace();

@@ -36,7 +36,7 @@ public class BootActivity extends BaseActivity implements Animation.AnimationLis
             super.handleMessage(msg);
             if (msg.what == FINISH_ACTIVITY){
                 if (isLogined){
-                    jumpToActivity(SblistActivity.class);
+                    jumpToActivity(DevicesListActivity.class);
                 }else {
                     jumpToActivity(LoginActivity.class);
                 }
