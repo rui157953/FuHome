@@ -4,17 +4,13 @@ package com.mobile.fuhome.app;
  * Created by Administrator on 2014/8/30.
  */
 
+import android.app.Application;
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import android.app.Application;
-import android.os.Message;
-import android.util.Log;
-import android.widget.EditText;
 
 public class ApplicationUtil extends Application {
 
@@ -36,6 +32,16 @@ public class ApplicationUtil extends Application {
     String str_openid;
     String str_userid;
     String str_psw;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        try {
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void init() throws IOException,Exception {
 

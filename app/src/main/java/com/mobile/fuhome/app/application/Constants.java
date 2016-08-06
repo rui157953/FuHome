@@ -5,6 +5,7 @@ package com.mobile.fuhome.app.application;
  */
 public class Constants {
 
+    public static final String IMGURL = "http://fuhome.net/home/image/pic/";
     public static String HOST = "http://fuhome.net/api/sblist/";
 
     public static String STR_IP="115.28.93.201";//"192.168.1.107";//目标IP

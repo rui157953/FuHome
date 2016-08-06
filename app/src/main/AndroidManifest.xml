@@ -70,7 +70,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".RegistererActivity"></activity>
+        <activity android:name=".RegistererActivity" />
+        <activity android:name=".DevicesListActivity"></activity>
     </application>
 
 </manifest>

@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
                         String userid = obj.getString("userid");
                         SharedPreferenceUtils.setBooleanData(LoginActivity.this, "isLogined", true);
                         SharedPreferenceUtils.setStringData(LoginActivity.this, "userid", userid);
-                        jumpToActivity(SblistActivity.class);
+                        jumpToActivity(DevicesListActivity.class);
                         LoginActivity.this.finish();
                     } else {
                         SharedPreferenceUtils.setBooleanData(LoginActivity.this, "isLogined", false);
