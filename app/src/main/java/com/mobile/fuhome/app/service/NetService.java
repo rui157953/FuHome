@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.mobile.fuhome.app.ApplicationUtil;
+import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.application.Constants;
 import com.mobile.fuhome.app.utils.SharedPreferenceUtils;
 

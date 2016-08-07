@@ -20,9 +20,12 @@ import android.widget.TextView;
 import com.mobile.fuhome.app.adapter.MyAdapter;
 import com.mobile.fuhome.app.adapter.UniversalBaseAdapter;
 import com.mobile.fuhome.app.adapter.ViewHolder;
+import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.application.BaseActivity;
+import com.mobile.fuhome.app.application.Constants;
 import com.mobile.fuhome.app.bean.FeelBean;
 import com.mobile.fuhome.app.utils.HttpUtils;
+import com.mobile.fuhome.app.utils.SharedPreferenceUtils;
 import com.mobile.fuhome.app.utils.TextUtil;
 
 import org.json.JSONObject;
@@ -202,11 +205,11 @@ public class ControlDeviceActivity extends BaseActivity {
         ApplicationUtil appUtil = (ApplicationUtil) this.getApplication();
         try {
             socket = appUtil.Out_socket();
-            str_openid = appUtil.Out_openid();
-            str_userid = appUtil.Out_userid();
-            str_psw = appUtil.Out_psw();
-            str_ip = appUtil.Out_ip();
-            str_port = appUtil.Out_port();
+            str_openid = Constants.STR_OPENID;
+            str_userid = SharedPreferenceUtils.getString(this,"userid","");
+            str_psw=SharedPreferenceUtils.getString(this,"psw","");
+            str_ip=Constants.STR_IP;
+            str_port=Constants.STR_PORT;
         } catch (Exception e1) {
             e1.printStackTrace();
         }

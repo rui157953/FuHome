@@ -36,11 +36,11 @@ public class BootActivity extends BaseActivity implements Animation.AnimationLis
             super.handleMessage(msg);
             if (msg.what == FINISH_ACTIVITY){
                 if (isLogined){
-                    jumpToActivity(DevicesListActivity.class);
+                    jumpToActivity(DevicesListActivity.class, null, false,0);
                 }else {
-                    jumpToActivity(LoginActivity.class);
+                    jumpToActivity(LoginActivity.class, null, false,0);
                 }
-//                jumpToActivity(MainActivity.class);
+//                jumpToActivity(MainActivity.class,null,false,0);
                 BootActivity.this.finish();
             }
         }

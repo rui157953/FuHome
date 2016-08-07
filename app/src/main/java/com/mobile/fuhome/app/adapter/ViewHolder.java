@@ -2,6 +2,7 @@ package com.mobile.fuhome.app.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -88,8 +91,9 @@ public class ViewHolder {
 
 	public ViewHolder setImageByUrl(int viewId, String url)
 	{
-		ImageLoader.getInstance(3, Type.LIFO).loadImage(url,
-				(ImageView) getView(viewId));
+//		Uri Uri = android.net.Uri.parse(url);
+		SimpleDraweeView simpleDraweeView = (SimpleDraweeView) getView(viewId);
+		simpleDraweeView.setImageURI(url);
 		return this;
 	}
 

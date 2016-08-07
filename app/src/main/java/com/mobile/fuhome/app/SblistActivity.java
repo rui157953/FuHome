@@ -18,6 +18,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.service.NetService;
 import com.mobile.fuhome.app.utils.HttpUtils;
 
@@ -306,8 +307,8 @@ public class SblistActivity extends Activity {
                                                   userInfo.edit().putString("sb_id", sb_id[arg2]).commit();
                                                   userInfo.edit().putString("id",  id[arg2]).commit();*/
                 /* 指定intent要启动的类 */
-                                          intent.setClass(SblistActivity.this, ControlDeviceActivity.class);
-//                                          intent.setClass(SblistActivity.this, ControlActivity.class);
+//                                          intent.setClass(SblistActivity.this, ControlDeviceActivity.class);
+                                          intent.setClass(SblistActivity.this, ControlActivity.class);
                 /* 启动一个新的Activity */
                                           SblistActivity.this.startActivity(intent);
 

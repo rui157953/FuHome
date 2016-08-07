@@ -18,10 +18,18 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
     }
 
-    protected void jumpToActivity(Class<?> activity) {
+    protected void jumpToActivity(Class<?> activity, Bundle bundle, boolean hasResult,int requestCode) {
         try {
             Intent intent = new Intent(mContext,activity);
-            mContext.startActivity(intent);
+            if (bundle!=null){
+                intent.putExtras(bundle);
+            }
+            if (hasResult){
+                startActivityForResult(intent,requestCode);
+            }else {
+                startActivity(intent);
+            }
+
         }catch (Exception e){
             Toast.makeText(mContext, "跳转失败~", Toast.LENGTH_SHORT).show();
         }

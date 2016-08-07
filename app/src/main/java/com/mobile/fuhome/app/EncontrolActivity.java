@@ -10,25 +10,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-
-import android.view.KeyEvent;
 
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
+
+import com.mobile.fuhome.app.application.ApplicationUtil;
 
 
 public class EncontrolActivity extends Activity {
