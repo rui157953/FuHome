@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,14 @@ import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.application.BaseActivity;
 import com.mobile.fuhome.app.application.Constants;
 import com.mobile.fuhome.app.bean.FeelBean;
+import com.mobile.fuhome.app.bean.FeelValueBean;
 import com.mobile.fuhome.app.utils.HttpUtils;
 import com.mobile.fuhome.app.utils.SharedPreferenceUtils;
 import com.mobile.fuhome.app.utils.TextUtil;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -40,10 +43,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
+
 /**
  * Created by Ryan on 2016/7/29.
  */
 public class ControlDeviceActivity extends BaseActivity {
+    private static final String TAG = "ryan";
     private String id, sb_id, sb_name;
     private String ztn, ztl;
     private TextView Tv_txt, Tv_ztl;
@@ -113,11 +119,10 @@ public class ControlDeviceActivity extends BaseActivity {
                     Log.v("ok", "control_case6");
                     break;
                 case 7:
-                    Log.i("ryan","case");
                     if (adapter != null) {
-                        Log.i("ryan","case1");
                         adapter.notifyDataSetChanged();
                     }
+                    requestFeelValue();
 //
 //                     /*保存传感器值*/
 //                    SharedPreferences userInfo;
@@ -308,7 +313,6 @@ public class ControlDeviceActivity extends BaseActivity {
                 viewHolder.setText(R.id.num_tv, item.get("feelvalue"));
                 viewHolder.setText(R.id.cell_tv, item.get("feelunit"));
                 viewHolder.setText(R.id.time_tv, item.get("feeltime"));
-                Log.i("ryan","UniversalBaseAdapter");
             }
         };
         lv.setAdapter(adapter);
@@ -569,7 +573,42 @@ public class ControlDeviceActivity extends BaseActivity {
     private void loadData() {
         re_flag = 0;
         loadFeelInfo();///* 加载菜单和传感器列表 */
-        receiveUDPData(); //接收UDP数据线程
+        requestFeelValue();
+//        receiveUDPData(); //接收UDP数据线程
+    }
+
+    private void requestFeelValue() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("f", "10");
+        params.put("id", id);
+        HttpUtils.addCommValue(ControlDeviceActivity.this,params);
+        HttpUtils.requestPost(Constants.HOST, params, new HttpUtils.ResultCallback() {
+            @Override
+            public void onResponse(Call call, String response) {
+                FeelValueBean feelValueBean = FeelValueBean.objectFromData(response);//此处有bug
+                String log = feelValueBean.getLog();
+                if (TextUtils.equals(log,"ok")){
+                    Tv_ztl.setText(feelValueBean.getStatename());
+                    Tv_txt.setText(feelValueBean.getStatevalue());
+                    List<FeelValueBean.FeelvalueBean> feelvalue = feelValueBean.getFeelvalue();
+                    for (int i = 0; i < feelvalue.size(); i++) {
+                        for (int j = 0; j <feelDataList.size(); j++) {
+                            if (TextUtils.equals(feelvalue.get(i).getFeelnum(),feelDataList.get(j).get("feelnum"))){
+                                Map<String, String> map = feelDataList.get(i);
+                                map.put("feelvalue",feelvalue.get(i).getFeelvalue1());
+                                map.put("feeltime",feelvalue.get(i).getFeeltime());
+                            }
+                        }
+                    }
+                    mHandler_re.sendEmptyMessageDelayed(7,2000);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+        });
     }
 
 
