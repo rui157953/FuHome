@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.bean.UpdataInfo;
 import com.mobile.fuhome.app.service.NetService;
 import com.mobile.fuhome.app.utils.HttpUtils;

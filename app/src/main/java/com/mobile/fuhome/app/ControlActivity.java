@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.mobile.fuhome.app.application.ApplicationUtil;
 import com.mobile.fuhome.app.service.NetService;
 import com.mobile.fuhome.app.utils.HttpUtils;
 

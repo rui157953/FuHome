@@ -1,4 +1,4 @@
-package com.mobile.fuhome.app;
+package com.mobile.fuhome.app.application;
 
 /**
  * Created by Administrator on 2014/8/30.
@@ -6,6 +6,8 @@ package com.mobile.fuhome.app;
 
 import android.app.Application;
 import android.util.Log;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -36,6 +38,7 @@ public class ApplicationUtil extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
         try {
             init();
         } catch (Exception e) {

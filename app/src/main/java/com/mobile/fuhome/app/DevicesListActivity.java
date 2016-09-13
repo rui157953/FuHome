@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -58,6 +59,19 @@ public class DevicesListActivity extends BaseActivity implements HttpUtils.Resul
                 loadData();
             }
         });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                Map<String, String> map = mDeviceList.get(position);
+                bundle.putString("sb_staname",map.get("statename"));
+                bundle.putString("sb_stavalue",map.get("statevalue"));
+                bundle.putString("sb_name",map.get("name"));
+                bundle.putString("sb_id",map.get("sbid"));
+                bundle.putString("id",map.get("id"));
+                jumpToActivity(ControlDeviceActivity.class,bundle,false,0);
+            }
+        });
     }
 
     private void initModle() {
@@ -69,6 +83,7 @@ public class DevicesListActivity extends BaseActivity implements HttpUtils.Resul
                 viewHolder.setText(R.id.list_item_time_tv,item.get("time"));
                 viewHolder.setText(R.id.list_item_add_tv,item.get("add"));
                 viewHolder.setText(R.id.list_item_state_tv,item.get("statevalue"));
+                viewHolder.setImageByUrl(R.id.list_item_iv,item.get("imgurl"));
             }
         };
         mListView.setAdapter(mAdapter);
