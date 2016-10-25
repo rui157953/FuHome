@@ -128,5 +128,6 @@
         <option value="https://github.com/rui157953/UniversalBaseAdapter" />
       </list>
     </option>
+    <option name="mySvnCommandLine" value="C:\Program Files\TortoiseSVN\bin\svn.exe" />
   </component>
 </application>
