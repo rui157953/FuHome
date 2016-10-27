@@ -118,12 +118,14 @@
   <component name="SvnApplicationSettings">
     <option name="myCheckoutURLs">
       <list>
+        <option value="https://218.244.146.252:8443/svn/oldDesktop/trunk/android/old/" />
         <option value="https://218.244.146.252:8443/svn/oldDesktop/trunk/android/old/Launcher3_new" />
         <option value="https://github.com/rui157953/UniversalBaseAdapter" />
       </list>
     </option>
     <option name="myTypedURLs">
       <list>
+        <option value="https://218.244.146.252:8443/svn/oldDesktop/trunk/android/old/" />
         <option value="https://218.244.146.252:8443/svn/oldDesktop/trunk/android/old/Launcher3_new" />
         <option value="https://github.com/rui157953/UniversalBaseAdapter" />
       </list>
