@@ -10,6 +10,10 @@
           <option name="url" value="https://github.com/rui157953/FuHome.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/lichao315/Calendar.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="D:\Android\Project" />
