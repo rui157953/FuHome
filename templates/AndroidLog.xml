@@ -4,13 +4,7 @@
     <variable name="METHOD_NAME" expression="methodName()" defaultValue="" alwaysStopAt="true" />
     <variable name="content" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
-      <option name="JAVA_CODE" value="false" />
       <option name="JAVA_STATEMENT" value="true" />
-      <option name="JAVA_EXPRESSION" value="false" />
-      <option name="JAVA_DECLARATION" value="false" />
-      <option name="JAVA_COMMENT" value="false" />
-      <option name="JAVA_STRING" value="false" />
-      <option name="COMPLETION" value="false" />
     </context>
   </template>
 </templateSet>
